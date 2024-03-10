@@ -14,3 +14,7 @@ spec:
     path: k8s
     repoURL: https://github.com/mogrizovic/spring-boot-example
     targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
