@@ -12,5 +12,5 @@ spec:
   project: default
   source:
     path: k8s
-    repoURL: https://github.com/milanogrizovic/spring-boot-example
-    targetRevision: HEAD
+    repoURL: https://github.com/mogrizovic/spring-boot-example
+    targetRevision: azure-aks

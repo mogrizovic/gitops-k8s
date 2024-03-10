@@ -12,5 +12,5 @@ spec:
   project: default
   source:
     path: guestbook
-    repoURL: https://github.com/milanogrizovic/gitops-k8s
-    targetRevision: HEAD
+    repoURL: https://github.com/mogrizovic/gitops-k8s
+    targetRevision: azure-aks
