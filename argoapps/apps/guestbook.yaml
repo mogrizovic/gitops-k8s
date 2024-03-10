@@ -13,4 +13,4 @@ spec:
   source:
     path: guestbook
     repoURL: https://github.com/mogrizovic/gitops-k8s
-    targetRevision: 696ea2f219cef163eacce0790d72e0a79a614b33
+    targetRevision: 949b19a3b1e75b43668fb95f524e24ae07e807a4 
