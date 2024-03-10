@@ -14,3 +14,7 @@ spec:
     path: guestbook
     repoURL: https://github.com/mogrizovic/gitops-k8s
     targetRevision: azure-aks 
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
