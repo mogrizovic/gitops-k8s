@@ -11,7 +11,7 @@ spec:
   source:
     path: argoapps/apps
     repoURL: https://github.com/mogrizovic/gitops-k8s
-    targetRevision: 949b19a3b1e75b43668fb95f524e24ae07e807a4
+    targetRevision: tree/azure-aks
   syncPolicy:
     automated:
       prune: true

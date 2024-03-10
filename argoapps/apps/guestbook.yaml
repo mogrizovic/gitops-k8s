@@ -13,4 +13,4 @@ spec:
   source:
     path: guestbook
     repoURL: https://github.com/mogrizovic/gitops-k8s
-    targetRevision: 19372ef0853b9c505e549ef515befb63a343932d 
+    targetRevision: tree/azure-aks 
