@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     path: argoapps/apps
-    repoURL: https://github.com/milanogrizovic/gitops-k8s
+    repoURL: https://github.com/mogrizovic/gitops-k8s
     targetRevision: HEAD
   syncPolicy:
     automated:
