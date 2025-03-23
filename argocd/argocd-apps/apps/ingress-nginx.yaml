@@ -16,3 +16,8 @@ spec:
     targetRevision: 4.12.0
     helm:
       releaseName: ingress-nginx
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true

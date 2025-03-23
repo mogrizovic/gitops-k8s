@@ -16,3 +16,8 @@ spec:
     targetRevision: v0.14.9
     helm:
       releaseName: metallb
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true

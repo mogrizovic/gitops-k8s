@@ -14,4 +14,8 @@ spec:
     path: argocd/argocd-install
     repoURL: https://github.com/mogrizovic/gitops-k8s
     targetRevision: HEAD
-
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
