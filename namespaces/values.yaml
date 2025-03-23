@@ -1,3 +1,4 @@
 namespaceNames:
+  - apps
   - ingress-nginx
   - metallb-system
