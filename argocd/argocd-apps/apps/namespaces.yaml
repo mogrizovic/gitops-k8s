@@ -1,19 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: root-app
+  name: ingress-nginx
   namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
+    namespace: default
     server: https://kubernetes.default.svc
-    namespace: argocd
   project: default
   source:
-    path: argoapps/apps
+    path: namespaces
     repoURL: https://github.com/mogrizovic/gitops-k8s
     targetRevision: HEAD
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-      allowEmpty: true
