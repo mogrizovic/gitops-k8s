@@ -1,16 +1,16 @@
-# server:
-#   # service:
-#   #   servicePortHttp: 81
-#   #   servicePortHttps: 444
-#   # insecure: true # https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/#traefik-v22 
-#   ingress:
-#     enabled: true
-#     hosts:
-#       - argocd.milan.bla
-#     paths:
-#       - /ui
-#     ingressClassName: "nginx"
-#     annotations:
-#       nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-#       # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-#       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+server:
+  # service:
+  #   servicePortHttp: 81
+  #   servicePortHttps: 444
+  insecure: true # https://argo-cd.readthedocs.io/en/stable/operator-manual/ingress/#traefik-v22 
+  ingress:
+    enabled: true
+    hosts:
+      - argocd.k3s.home
+    paths:
+      - /
+    ingressClassName: nginx
+    annotations:
+      # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+      # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
