@@ -1,17 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd
+  name: root-app
   namespace: argocd
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: argocd
     server: https://kubernetes.default.svc
+    namespace: argocd
   project: default
   source:
-    path: argocd/argocd-install
+    path: argocd-resources/argocd-apps/apps
     repoURL: https://github.com/mogrizovic/gitops-k8s
     targetRevision: HEAD
   syncPolicy:
