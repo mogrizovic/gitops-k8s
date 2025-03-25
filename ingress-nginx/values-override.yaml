@@ -1,4 +1,3 @@
 controller:
   admissionWebhooks:
-    certManager:
-      enabled: true
+    enabled: false
