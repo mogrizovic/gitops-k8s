@@ -9,7 +9,7 @@ metadata:
     chart: {{ template "helm-guestbook.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
-  annotations: {{ .Values.ingress.annotations }}
+  # annotations: {{ .Values.ingress.annotations }}
     # nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
