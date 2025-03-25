@@ -5,3 +5,6 @@ server:
     enabled: true
     ingressClassName: nginx
     hostname: argocd.k3s.home
+configs:
+  params:
+    server.insecure: true
