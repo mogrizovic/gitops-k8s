@@ -18,7 +18,9 @@ spec:
       values: |
         replicaCount: 3
         image:
-          tag: "1.0"
+          tag: 1.0-arm64
+        nodeSelector:
+          kubernetes.io/arch: arm64
   syncPolicy:
     automated:
       prune: true
