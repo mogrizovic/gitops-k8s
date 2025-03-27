@@ -2,3 +2,4 @@ namespaceNames:
   - apps
   - ingress-nginx
   - metallb-system
+  - argo-workflows
