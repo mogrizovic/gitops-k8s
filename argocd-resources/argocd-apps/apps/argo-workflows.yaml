@@ -23,6 +23,9 @@ spec:
         controller:
           workflowNamespaces:
             - argo-workflows
+        server:
+          extraArgs:
+            - --auth-mode=server
   syncPolicy:
     automated:
       prune: true
