@@ -4,3 +4,4 @@ namespaceNames:
   - metallb-system
   - argo-workflows
   - longhorn-system
+  - wordpress
