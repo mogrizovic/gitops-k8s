@@ -5,3 +5,4 @@ namespaceNames:
   - argo-workflows
   - longhorn-system
   - wordpress
+  - sealed-secrets
