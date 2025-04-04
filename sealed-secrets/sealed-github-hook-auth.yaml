@@ -1,0 +1,15 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: github-hook-auth
+  namespace: argo-workflows
+spec:
+  encryptedData:
+    secret: AgAGIoPrAldddwnM/Wzr+SyAA/p247LAyl4Cy08TcSEQYtWJ0ilLifGLP9pTOGC6X0ZzoONeT860E3ET+gnNx+DcqQhILw5Aw+5JC9ClJHKntpuHJHxmbN4Ecd9hCUUkHmJSM6aPXI1UEx4Y86eO54JECt0J5rbU9+VFXL0CjPJMrDYIlQk17uNE97NgTs6xPsKXWofgsTMXAgxGIPTnPD/nhjzb+t0z1NeLaWRW77Bf28Hn93v1zS+lXlKcBnrNGP0H9pBZH6wf8/hvzA+oY3iEXyGe7+zg2e/fMtv/ovto2Ey60ZW3iRNOjF5J/3Q8vGzx2CM98MutFtjjV+xmODgSnjvb0CvXiSzDRQyUcapUlc7auQS5hxacti4RbeBk3CCIqGarDmjMVKymNgjPiMCearUtVlQQbHQAAGCRDQ3vBCFeTo4okdZINw/igC+/U8BDIWajl/2ZlsmJZpMhSNA8zm22vXOWoGGRhlgrohBEd5OORqUBbOns7b7WpLmVlfWUIlNMnriOt1ft8tzetfMBrf2UiT54gt+TJeC1XO2gKK9QWLsy8CkVzOUIIzX0ckFaUR4wZgmVPz+W/0/LC3+Ns62MKhF66iwp0xZqf7FApnLfXMAXboR6DJi4bsDECd09OUZoJvU8QdWTWtk33eUb+2SqNqmH8rCPJ4Ql1OqywHDtbzW6u11IIKXsdz7qAHc3ESoDTzqLnIc7oSKFb2V+jselxESl12Lj2pAhTXYXOhHAPKM=
+  template:
+    metadata:
+      creationTimestamp: null
+      name: github-hook-auth
+      namespace: argo-workflows
