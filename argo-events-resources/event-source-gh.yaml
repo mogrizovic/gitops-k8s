@@ -40,6 +40,7 @@ spec:
       # You can find more info on https://developer.github.com/v3/activity/events/types/
       events:
         - "push"
+        - "ping"
 
       # webhookSecret refers to K8s secret that stores the github hook secret
       # +optional
