@@ -1,0 +1,16 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: dockercred
+  namespace: argo-workflows
+spec:
+  encryptedData:
+    .dockerconfigjson: AgDFjcqrJeyMSW2fGZGmjlEF4ksx+LUBIHnIudX9YK8h+tnsIKIdZzviXyVyCrRgKPBazYLK9ccnQeoudvQOFAHDxoMKP2V60fNzYQ6ke2GGYwZyC2uRZduCH3T3VHk/T7VkKpgF+PQm8ciTI4slFNfpgoJBlg1OwiYDOusRQcjlzaFBx+FHzrrAqb4ssZgRiiqk0Q3+Aqmam6DsK3RupvK58kw3+i89rsOvuU0MS3zJuuxm03PPFTMtPAhR/4orsprspQNjDksx/hZ2eRbwl0XQcRs8MYW8sNoz7ysm90rYjpanqgEWKrE+Wk0uFcZplCRFP323LV2FWJbplX++LrQ11efY9pUpNqbPRDaJb+PLs1ky7q6yGKoVp+ntlY05zo1q4kwDxNGoo9x/u3sYeiaY7Rb8Y+OrV1Wt0AqcBBnrMP6pMkw/hFostObGcwQqM1sEsbYZa9qIhDJLW9UR/UteXzJXolImM0Uu2jZX2wlzPymgNxn3D1jErMTkokUNKkF1t90zh7dK+JcJL83IRBBAA/uHAYbPPS6xFk0dVB+NhGjLiPn5/KOPrClE22DMQGvus8upCOqsNTnhFl5mg8GIlhtpLNtBSrHYLUfIJzPx7afgKxwlWpD8ZUhKte/RE457/aIl36btiy4tvK6nRjUve0RSB93zWf4YRCRaLl9fubNVMVm3ETLZmbjf1DA/EW0ubY09CpBwgEbde/7qKMBe5iAX2DlIo1Pu1eqpSWLq13cAjjif7QlBN9V5TQpxYBWStZB6xSiv0LsFnpMH5JVYCHA3gCZPMAmJWDuQhJJPfbqJcTVNdLxATv+KUUl/4pIViuaFyNwO5j2XPZee21OpIiW//UhhJJzx8WuAQ6bydw3aaggJj/dJ1TvU3Tprxp6zgZMJ
+  template:
+    metadata:
+      creationTimestamp: null
+      name: dockercred
+      namespace: argo-workflows
+    type: kubernetes.io/dockerconfigjson
