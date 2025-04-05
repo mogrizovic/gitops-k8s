@@ -1,0 +1,103 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: kaniko-build-image
+spec:
+  entrypoint: kaniko-build-loop
+  templates:
+  - name: kaniko-build-loop
+    inputs:
+      parameters:
+      - name: image_name
+      - name: image_tag
+      - name: image_variant
+      - name: repo
+    steps:
+      - - name: kaniko-build
+          template: kaniko-build
+          arguments:
+            parameters:
+            - name: image_name
+              value: "{{inputs.parameters.image_name}}"
+            - name: image_tag
+              value: "{{inputs.parameters.image_tag}}"
+            - name: image_variant
+              value: "{{inputs.parameters.image_variant}}"
+            - name: repo
+              value: "{{inputs.parameters.repo}}"
+            - name: arch
+              value: "{{item}}"
+          withItems:
+            - arm64
+            - amd64
+
+      - - name: manifest-tool
+          template: manifest-tool
+          arguments:
+            parameters:
+            - name: image_name
+              value: "{{inputs.parameters.image_name}}"
+            - name: image_tag
+              value: "{{inputs.parameters.image_tag}}"
+            - name: image_variant
+              value: "{{inputs.parameters.image_variant}}"
+            - name: platforms
+              value: "linux/amd64,linux/arm64"
+            - name: repo
+              value: "{{inputs.parameters.repo}}"
+
+  - name: kaniko-build
+    inputs:
+      parameters:
+      - name: image_name
+      - name: image_tag
+      - name: image_variant
+      - name: arch
+      - name: repo
+    volumes:
+      - name: kaniko-secret
+        secret:
+          secretName: dockercred
+          items:
+            - key: .dockerconfigjson
+              path: config.json
+    nodeSelector:
+      kubernetes.io/arch: "{{inputs.parameters.arch}}"
+    serviceAccountName: argo-workflow
+    container:
+      image: gcr.io/kaniko-project/executor:latest
+      args:
+      - "--context=git://github.com/{{inputs.parameters.repo}}"
+      - "--destination={{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}-{{inputs.parameters.image_variant}}-{{inputs.parameters.arch}}"
+      volumeMounts:
+      - name: kaniko-secret
+        mountPath: /kaniko/.docker
+
+  - name: manifest-tool
+    inputs:
+      parameters:
+      - name: image_name
+      - name: image_tag
+      - name: image_variant
+      - name: platforms
+    serviceAccountName: argo-workflow
+    container:
+      image: mplatform/manifest-tool:alpine
+      command: ["/bin/sh", "-c"]
+      args:
+        - >
+          manifest-tool --username=$USERNAME --password=$PASSWORD push
+          from-args --platforms {{inputs.parameters.platforms}}
+          --template {{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}-{{inputs.parameters.image_variant}}-ARCH
+          --target {{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}-{{inputs.parameters.image_variant}}
+      env:
+        - name: USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: dockerhub-auth
+              key: username
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: dockerhub-auth
+              key: password

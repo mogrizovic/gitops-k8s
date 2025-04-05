@@ -6,11 +6,11 @@ metadata:
 spec:
   service:
     ports:
-      - name: example
+      - name: pr-open
         port: 12000
         targetPort: 12000
   github:
-    example:
+    pr-open:
       repositories:
         - owner: mogrizovic
           names:
