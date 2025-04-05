@@ -14,6 +14,6 @@ spec:
             name: github-eventsource-svc
             port:
               number: 12000
-        path: /push
+        path: /gh-hook
         pathType: Prefix
 
