@@ -21,6 +21,7 @@ spec:
               value: "{{inputs.parameters.commit_message}}"
             - name: image_name
               value: "{{inputs.parameters.image_name}}"
+
       - - name: kaniko-build
           template: kaniko-build
           arguments:
@@ -124,7 +125,7 @@ spec:
       image: ogrizovicm/alpine-curl-jq:latest
       command: [sh]
       source: |
-        set -e
+        set -ex
 
         REPO="{{inputs.parameters.image_name}}"
 
@@ -185,5 +186,6 @@ spec:
         echo "Bump type: $BUMP -> Next tag: $NEXT_TAG"
 
         # Output to file so it can be passed to next step
-        echo "$NEXT_TAG" > /tmp/next_tag.txt
+        echo -n "$NEXT_TAG" > /tmp/next_tag.txt
+        echo "Bump type: $BUMP; Next tag: $NEXT_TAG"
 
