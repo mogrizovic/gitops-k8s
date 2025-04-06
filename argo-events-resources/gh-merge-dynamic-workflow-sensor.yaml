@@ -32,10 +32,10 @@ spec:
               apiVersion: argoproj.io/v1alpha1
               kind: Workflow
               metadata:
-                generateName: dynamic-merge-workflow-
+                generateName: -merge-
               spec:
-                ttlStrategy:
-                  secondsAfterCompletion: 300 # to cleanup pods after ttl
+                # ttlStrategy:
+                #   secondsAfterCompletion: 300 # to cleanup pods after ttl
                 workflowTemplateRef:
                   name: "wf-tmpl-"  # this name depends on what repo initiated the webhook
                 arguments:
@@ -54,6 +54,11 @@ spec:
                 dependencyName: github-hook
                 dataKey: body.repository.name
               dest: spec.arguments.parameters.0.value
+            - src:
+                dependencyName: github-hook
+                dataKey: body.repository.name
+              dest: metadata.name
+              operation: append
             # - src:
             #     dependencyName: github-hook
             #     dataKey: body.ref
