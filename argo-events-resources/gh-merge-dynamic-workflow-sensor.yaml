@@ -42,6 +42,8 @@ spec:
                   parameters:
                     - name: repo_name
                       value: ""
+                    - name: commit_message
+                      value: ""
                     - name: branch_name
                       value: ""
           parameters:
@@ -54,6 +56,10 @@ spec:
                 dependencyName: github-hook
                 dataKey: body.repository.full_name
               dest: spec.arguments.parameters.0.value
+            - src:
+                dependencyName: github-hook
+                dataKey: body.head_commit.message
+              dest: spec.arguments.parameters.1.value
             - src:
                 dependencyName: github-hook
                 dataTemplate: "{{ .Input.body.repository.name }}-master-{{ .Input.body.head_commit.id | substr 0 7  }}"

@@ -12,7 +12,16 @@ spec:
       - name: image_tag
       - name: image_variant
       - name: repo
+      - name: commit_message
     steps:
+      - - name: calculate-version
+          template: calculate-image-tag
+          arguments:
+            parameters:
+            - name: commit_message
+              value: "{{inputs.parameters.commit_message}}"
+            - name: image_name
+              value: "{{inputs.parameters.image_name}}"
       - - name: kaniko-build
           template: kaniko-build
           arguments:
@@ -20,7 +29,7 @@ spec:
             - name: image_name
               value: "{{inputs.parameters.image_name}}"
             - name: image_tag
-              value: "{{inputs.parameters.image_tag}}"
+              value: "{{steps.calculate-version.outputs.parameters.next_tag}}"
             - name: image_variant
               value: "{{inputs.parameters.image_variant}}"
             - name: repo
@@ -101,3 +110,81 @@ spec:
             secretKeyRef:
               name: dockerhub-auth
               key: password
+
+  - name: calculate-image-tag
+    inputs:
+      parameters:
+        - name: image_name      # e.g. ogrizovicm/spring-boot-example
+        - name: commit_message  # e.g. "MINOR: Add new endpoint"
+    outputs:
+      parameters:
+        - name: next_tag
+          valueFrom:
+            path: /tmp/next_tag.txt
+    script:
+      image: alpine:3.18
+      command: [sh]
+      source: |
+        set -e
+
+        REPO="{{inputs.parameters.image_name}}"
+
+        USER=$(echo "$REPO" | cut -d/ -f1)
+        IMAGE=$(echo "$REPO" | cut -d/ -f2)
+
+        TAGS=$(curl -s "https://hub.docker.com/v2/repositories/$USER/$IMAGE/tags?page_size=10" | jq -r '.results[].name' || echo "")
+
+        # Fallback to 0.0.1 if no tags found
+        if [ -z "$TAGS" ]; then
+          echo "0.0.1" > /tmp/next_tag.txt
+          exit 0
+        fi
+
+        # Filter only semver-valid tags and strip 'v' prefix if present
+        LATEST=$(echo "$TAGS" | grep -E '^v?[0-9]+\.[0-9]+\.[0-9]+$' | sed 's/^v//' | sort -V | tail -n 1)
+
+        MAJOR=$(echo "$LATEST" | cut -d. -f1)
+        MINOR=$(echo "$LATEST" | cut -d. -f2)
+        PATCH=$(echo "$LATEST" | cut -d. -f3)
+
+        COMMIT_MSG=$(echo "{{inputs.parameters.commit_message}}" | tr '[:lower:]' '[:upper:]')
+
+        # Default bump is PATCH
+        BUMP="patch"
+
+        # Check commit message prefix
+        case "$COMMIT_MSG" in
+          MAJOR:*)
+            BUMP="major"
+            ;;
+          MINOR:*)
+            BUMP="minor"
+            ;;
+          *)
+            BUMP="patch"
+            ;;
+        esac
+
+        # Bump version accordingly
+        case "$BUMP" in
+          major)
+            MAJOR=$((MAJOR + 1))
+            MINOR=0
+            PATCH=0
+            ;;
+          minor)
+            MINOR=$((MINOR + 1))
+            PATCH=0
+            ;;
+          patch)
+            PATCH=$((PATCH + 1))
+            ;;
+        esac
+
+        # Construct next tag
+        NEXT_TAG="$MAJOR.$MINOR.$PATCH"
+        echo "Bump type: $BUMP -> Next tag: $NEXT_TAG"
+
+        # Output to file so it can be passed to next step
+        echo "$NEXT_TAG" > /tmp/next_tag.txt
+
