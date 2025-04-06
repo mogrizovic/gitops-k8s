@@ -56,9 +56,9 @@ spec:
               dest: spec.arguments.parameters.0.value
             - src:
                 dependencyName: github-hook
-                dataKey: body.repository.name
+                dataTemplate: "{{ .Input.body.repository.name }}-master-{{ .Input.body.head_commit.id | substr 0 7  }}"
               dest: metadata.name
-              operation: append
+              operation: overwrite
             # - src:
             #     dependencyName: github-hook
             #     dataKey: body.ref
