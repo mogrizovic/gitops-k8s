@@ -8,7 +8,7 @@ spec:
   dependencies:
     - name: github-hook
       eventSourceName: github
-      eventName: merge
+      eventName: gh-hook
       filters:
         data:
           # Type of Github event that triggered the delivery: [pull_request, push, issues, label, ...]
