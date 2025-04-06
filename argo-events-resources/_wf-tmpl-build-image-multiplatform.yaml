@@ -121,7 +121,7 @@ spec:
           valueFrom:
             path: /tmp/next_tag.txt
     script:
-      image: alpine:3.18
+      image: ogrizovicm/alpine-curl-jq:latest
       command: [sh]
       source: |
         set -e
