@@ -27,7 +27,7 @@ spec:
         name: dynamic-merge-workflow-trigger
         argoWorkflow:
           resource: workflows
-          operation: create
+          operation: submit
           source:
             resource:
               apiVersion: argoproj.io/v1alpha1
