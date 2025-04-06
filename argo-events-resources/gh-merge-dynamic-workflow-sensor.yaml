@@ -32,7 +32,7 @@ spec:
               apiVersion: argoproj.io/v1alpha1
               kind: Workflow
               metadata:
-                generateName: -merge-
+                generateName: merge-
               spec:
                 # ttlStrategy:
                 #   secondsAfterCompletion: 300 # to cleanup pods after ttl
@@ -58,7 +58,7 @@ spec:
                 dependencyName: github-hook
                 dataKey: body.repository.name
               dest: metadata.name
-              operation: prepend
+              operation: append
             # - src:
             #     dependencyName: github-hook
             #     dataKey: body.ref
