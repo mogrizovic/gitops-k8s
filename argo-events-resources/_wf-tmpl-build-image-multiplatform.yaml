@@ -9,7 +9,6 @@ spec:
     inputs:
       parameters:
       - name: image_name
-      - name: image_tag
       - name: image_variant
       - name: repo
       - name: commit_message
@@ -47,7 +46,7 @@ spec:
             - name: image_name
               value: "{{inputs.parameters.image_name}}"
             - name: image_tag
-              value: "{{inputs.parameters.image_tag}}"
+              value: "{{steps.calculate-version.outputs.parameters.next_tag}}"
             - name: image_variant
               value: "{{inputs.parameters.image_variant}}"
             - name: platforms
