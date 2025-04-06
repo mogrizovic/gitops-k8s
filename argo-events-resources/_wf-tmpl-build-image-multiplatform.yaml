@@ -6,6 +6,7 @@ spec:
   entrypoint: kaniko-build-loop
   templates:
   - name: kaniko-build-loop
+    serviceAccountName: argo-workflow
     inputs:
       parameters:
       - name: image_name
