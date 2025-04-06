@@ -52,7 +52,7 @@ spec:
               operation: append
             - src:
                 dependencyName: github-hook
-                dataKey: body.repository.name
+                dataKey: body.repository.full_name
               dest: spec.arguments.parameters.0.value
             - src:
                 dependencyName: github-hook
