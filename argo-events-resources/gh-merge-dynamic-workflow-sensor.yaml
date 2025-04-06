@@ -58,7 +58,7 @@ spec:
                 dependencyName: github-hook
                 dataKey: body.repository.name
               dest: metadata.name
-              operation: append
+              operation: prepend
             # - src:
             #     dependencyName: github-hook
             #     dataKey: body.ref
