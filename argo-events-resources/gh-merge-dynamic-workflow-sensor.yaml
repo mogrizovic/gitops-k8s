@@ -26,7 +26,6 @@ spec:
     - template:
         name: dynamic-merge-workflow-trigger
         argoWorkflow:
-          resource: workflows
           operation: submit
           source:
             resource:
