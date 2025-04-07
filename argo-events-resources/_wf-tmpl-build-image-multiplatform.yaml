@@ -162,7 +162,7 @@ spec:
           MINOR:*)
             BUMP="minor"
             ;;
-          PATCH)
+          PATCH:*)
             BUMP="patch"
             ;;
           *)
