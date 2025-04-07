@@ -151,8 +151,8 @@ spec:
 
         COMMIT_MSG=$(echo "{{inputs.parameters.commit_message}}" | tr '[:lower:]' '[:upper:]')
 
-        # Default bump is PATCH
-        BUMP="patch"
+        # Default bump is NO
+        BUMP="no"
 
         # Check commit message prefix
         case "$COMMIT_MSG" in
@@ -162,8 +162,11 @@ spec:
           MINOR:*)
             BUMP="minor"
             ;;
-          *)
+          PATCH)
             BUMP="patch"
+            ;;
+          *)
+            BUMP="no"
             ;;
         esac
 
