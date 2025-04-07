@@ -78,7 +78,7 @@ spec:
       image: gcr.io/kaniko-project/executor:latest
       args:
       - "--context=git://github.com/{{inputs.parameters.repo}}"
-      - '--destination={{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{=sprig.ternary("-inputs.parameters.image_variant", "", inputs.parameters.image_variant) }}-{{inputs.parameters.arch}}'
+      - '--destination={{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{if inputs.parameters.image_variant == ""}}""{{else}}-{{inputs.parameters.image_variant}}{{end}}-{{inputs.parameters.arch}}'
       volumeMounts:
       - name: kaniko-secret
         mountPath: /kaniko/.docker
@@ -98,7 +98,7 @@ spec:
         - >
           manifest-tool --username=$USERNAME --password=$PASSWORD push
           from-args --platforms {{inputs.parameters.platforms}}
-          --template {{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{=sprig.ternary("-inputs.parameters.image_variant", "", inputs.parameters.image_variant) }}-ARCH
+          --template {{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{if inputs.parameters.image_variant == ""}}""{{else}}-{{inputs.parameters.image_variant}}{{end}}-ARCH
           --target {{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{inputs.parameters.image_variant}}
       env:
         - name: USERNAME
