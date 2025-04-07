@@ -23,6 +23,13 @@ spec:
             - name: image_name
               value: "{{inputs.parameters.image_name}}"
 
+      - - name: calculate-prerelease
+          template: calculate-image-prerelease
+          arguments:
+            parameters:
+            - name: image_variant
+              value: "{{inputs.parameters.image_variant}}"
+
       - - name: kaniko-build
           template: kaniko-build
           arguments:
@@ -32,7 +39,7 @@ spec:
             - name: image_tag
               value: "{{steps.calculate-version.outputs.parameters.next_tag}}"
             - name: image_variant
-              value: "{{inputs.parameters.image_variant}}"
+              value: "{{steps.calculate-prerelease.outputs.parameters.prerelease}}"
             - name: repo
               value: "{{inputs.parameters.repo}}"
             - name: arch
@@ -50,11 +57,31 @@ spec:
             - name: image_tag
               value: "{{steps.calculate-version.outputs.parameters.next_tag}}"
             - name: image_variant
-              value: "{{inputs.parameters.image_variant}}"
+              value: "{{steps.calculate-prerelease.outputs.parameters.prerelease}}"
             - name: platforms
               value: "linux/amd64,linux/arm64"
             - name: repo
               value: "{{inputs.parameters.repo}}"
+
+  - name: calculate-image-prerelease
+    inputs:
+      parameters:
+        - name: image_variant
+    outputs:
+      parameters:
+        - name: prerelease
+          valueFrom:
+            path: /tmp/prerelease.txt
+    serviceAccountName: argo-workflow
+    script:
+      image: ogrizovicm/alpine-curl-jq:1.0.0
+      command: [sh]
+      source: |
+        variant={{inputs.parameters.image_variant}}
+        if [ -n {{inputs.parameters.image_variant}} ]; then
+          variant="-${variant}"
+        fi
+        echo $variant > /tmp/prerelease.txt
 
   - name: kaniko-build
     inputs:
@@ -78,7 +105,7 @@ spec:
       image: gcr.io/kaniko-project/executor:latest
       args:
       - "--context=git://github.com/{{inputs.parameters.repo}}"
-      - '--destination={{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{if inputs.parameters.image_variant == ""}}""{{else}}-{{inputs.parameters.image_variant}}{{end}}-{{inputs.parameters.arch}}'
+      - '--destination={{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{steps.calculate-prerelease.outputs.parameters.prerelease}}-{{inputs.parameters.arch}}'
       volumeMounts:
       - name: kaniko-secret
         mountPath: /kaniko/.docker
@@ -98,7 +125,7 @@ spec:
         - >
           manifest-tool --username=$USERNAME --password=$PASSWORD push
           from-args --platforms {{inputs.parameters.platforms}}
-          --template {{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{if inputs.parameters.image_variant == ""}}""{{else}}-{{inputs.parameters.image_variant}}{{end}}-ARCH
+          --template {{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{steps.calculate-prerelease.outputs.parameters.prerelease}}-ARCH
           --target {{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{inputs.parameters.image_variant}}
       env:
         - name: USERNAME
