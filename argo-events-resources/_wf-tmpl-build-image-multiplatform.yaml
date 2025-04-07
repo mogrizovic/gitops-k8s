@@ -98,7 +98,7 @@ spec:
         - >
           manifest-tool --username=$USERNAME --password=$PASSWORD push
           from-args --platforms {{inputs.parameters.platforms}}
-          --template {{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{inputs.parameters.image_variant}}-ARCH
+          --template {{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{inputs.parameters.image_variant | ternary "-inputs.parameters.image_variant" ""}}-ARCH
           --target {{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{inputs.parameters.image_variant}}
       env:
         - name: USERNAME
