@@ -124,7 +124,7 @@ spec:
             path: /tmp/next_tag.txt
     serviceAccountName: argo-workflow
     script:
-      image: ogrizovicm/alpine-curl-jq:latest
+      image: ogrizovicm/alpine-curl-jq:1.0.0
       command: [sh]
       source: |
         set -e
