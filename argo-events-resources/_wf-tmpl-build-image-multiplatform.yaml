@@ -78,7 +78,7 @@ spec:
       image: gcr.io/kaniko-project/executor:latest
       args:
       - "--context=git://github.com/{{inputs.parameters.repo}}"
-      - "--destination={{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{inputs.parameters.image_variant}}-{{inputs.parameters.arch}}"
+      - "--destination={{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{inputs.parameters.image_variant | ternary '-inputs.parameters.image_variant' ''}}-{{inputs.parameters.arch}}"
       volumeMounts:
       - name: kaniko-secret
         mountPath: /kaniko/.docker
