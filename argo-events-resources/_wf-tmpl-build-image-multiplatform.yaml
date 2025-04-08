@@ -23,7 +23,7 @@ spec:
             - name: image_name
               value: "{{inputs.parameters.image_name}}"
 
-      - - name: calculate-prerelease
+        - name: calculate-prerelease
           template: calculate-image-prerelease
           arguments:
             parameters:
