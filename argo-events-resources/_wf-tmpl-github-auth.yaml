@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: github-app-auth
+  namespace: argo-workflows
+spec:
+  templates:
+    - name: generate-token
+      script:
+        image: ogrizovicm/alpine-curl-jq:1.0.0
+        command: [sh]
+        source: |
+          set -e
+
+          apk add --no-cache bash curl jq openssl
+
+          echo "Reading secrets..."
+          APP_ID=$(cat /secrets/app_id)
+          INSTALLATION_ID=$(cat /secrets/installation_id)
+
+          echo "Generating JWT..."
+          IAT=$(date +%s)
+          EXP=$(($IAT + 540))
+          HEADER=$(echo -n '{"alg":"RS256","typ":"JWT"}' | base64 | tr -d '=' | tr '/+' '_-')
+          PAYLOAD=$(echo -n "{\"iat\":$IAT,\"exp\":$EXP,\"iss\":$APP_ID}" | base64 | tr -d '=' | tr '/+' '_-')
+          SIGNATURE=$(echo -n "$HEADER.$PAYLOAD" | openssl dgst -sha256 -sign /secrets/private_key -binary | base64 | tr -d '=' | tr '/+' '_-')
+          JWT="$HEADER.$PAYLOAD.$SIGNATURE"
+
+          echo "Exchanging JWT for installation token..."
+          TOKEN=$(curl -s -X POST \
+            -H "Authorization: Bearer $JWT" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/app/installations/$INSTALLATION_ID/access_tokens | jq -r .token)
+
+          echo "$TOKEN" > /tmp/access_token
+        volumeMounts:
+          - name: github-secret
+            mountPath: /secrets
+            readOnly: true
+      outputs:
+        parameters:
+          - name: access_token
+            valueFrom:
+              path: /tmp/access_token
+      volumes:
+        - name: github-secret
+          secret:
+            secretName: gh-app-myargoworkflows

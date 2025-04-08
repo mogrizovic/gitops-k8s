@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: commit-helm-image-tag
+  namespace: argo-workflows
+spec:
+  templates:
+    - name: commit-image-tag
+      inputs:
+        parameters:
+          - name: repo_name
+          - name: branch_name
+          - name: image_tag
+          - name: access_token
+          - name: values_path
+      script:
+        image: alpine/git
+        command: [sh]
+        source: |
+          set -e
+
+          git config --global user.name "argo-workflows[bot]"
+          git config --global user.email "argo-workflows-bot@mogrizovic.com"
+
+          echo "Cloning repo {{inputs.parameters.repo_name}} on branch {{inputs.parameters.branch_name}}"
+          git clone --single-branch --branch {{inputs.parameters.branch_name}} \
+            https://x-access-token:{{inputs.parameters.access_token}}@github.com/{{inputs.parameters.repo_name}} repo
+
+          cd repo
+
+          echo "Updating Helm image tag in values file..."
+          sed -i "s/^  tag: .*/  tag: {{inputs.parameters.image_tag}}/" {{inputs.parameters.values_path}}
+
+          echo "Committing changes..."
+          git add {{inputs.parameters.values_path}}
+          git commit -m "ci: update image tag to {{inputs.parameters.image_tag}}"
+          git push origin {{inputs.parameters.branch_name}}
+
