@@ -59,7 +59,7 @@ spec:
                     - name: commit_message
                       value: ""
                     - name: image_variant
-                      value: ""
+                      value: "test"
                     - name: branch_name
                       value: ""
           parameters:
