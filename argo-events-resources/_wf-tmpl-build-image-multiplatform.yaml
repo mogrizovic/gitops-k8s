@@ -28,7 +28,7 @@ spec:
           arguments:
             parameters:
             - name: image_variant
-              value: '{{inputs.parameters.image_variant | replace "/" "_" }}'
+              value: "{{inputs.parameters.image_variant}}"
 
       - - name: kaniko-build
           template: kaniko-build
