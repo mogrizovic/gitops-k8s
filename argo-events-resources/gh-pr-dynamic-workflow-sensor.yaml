@@ -11,8 +11,6 @@ spec:
       eventName: gh-hook
       filters:
         data:
-          # Type of Github event that triggered the delivery: [pull_request, push, issues, label, ...]
-          # https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads
           - path: headers.X-Github-Event
             type: string
             value:
@@ -32,10 +30,10 @@ spec:
             type: string
             value:
               - master
-          - path: body.pull_request.head.user.login
-            type: string
-            comparator: "!="
-            value: "argo-workflows[bot]"
+          # - path: body.pull_request.head.user.login
+          #   type: string
+          #   comparator: "!="
+          #   value: "argo-workflows[bot]"
   triggers:
     - template:
         name: dynamic-pr-workflow-trigger
