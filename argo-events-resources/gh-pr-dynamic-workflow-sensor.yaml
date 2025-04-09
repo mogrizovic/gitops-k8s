@@ -76,6 +76,7 @@ spec:
                 dependencyName: github-hook
                 dataTemplate: '{{ .Input.body.pull_request.head.ref | replace "/" "_" }}'
               dest: spec.arguments.parameters.2.value
+              operation: overwrite
             - src:
                 dependencyName: github-hook
                 dataKey: body.pull_request.head.ref
