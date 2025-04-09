@@ -1,89 +1,89 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Sensor
-metadata:
-  name: gh-pr-dynamic-workflow-sensor
-spec:
-  template:
-    serviceAccountName: operate-workflow-sa
-  dependencies:
-    - name: github-hook
-      eventSourceName: github
-      eventName: gh-hook
-      filters:
-        data:
-          # Type of Github event that triggered the delivery: [pull_request, push, issues, label, ...]
-          # https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads
-          - path: headers.X-Github-Event
-            type: string
-            value:
-              - pull_request
-          - path: body.action
-            type: string
-            value:
-              - opened
-              - edited
-              - reopened
-              - synchronize
-          - path: body.pull_request.state
-            type: string
-            value:
-              - open
-          - path: body.pull_request.base.ref
-            type: string
-            value:
-              - master
-          - path: body.pull_request.head.user.login
-            type: string
-            comparator: "!="
-            value: "argo-workflows[bot]"
-  triggers:
-    - template:
-        name: dynamic-pr-workflow-trigger
-        argoWorkflow:
-          operation: submit
-          source:
-            resource:
-              apiVersion: argoproj.io/v1alpha1
-              kind: Workflow
-              metadata:
-                generateName: pr-
-              spec:
-                # ttlStrategy:
-                #   secondsAfterCompletion: 300 # to cleanup pods after ttl
-                workflowTemplateRef:
-                  name: "wf-tmpl-"  # this name depends on what repo initiated the webhook
-                arguments:
-                  parameters:
-                    - name: repo_name
-                      value: ""
-                    - name: commit_message
-                      value: ""
-                    - name: image_variant
-                      value: "test"
-                    - name: branch_name
-                      value: ""
-          parameters:
-            - src:
-                dependencyName: github-hook
-                dataKey: body.pull_request.head.repo.name
-              dest: spec.workflowTemplateRef.name
-              operation: append
-            - src:
-                dependencyName: github-hook
-                dataKey: body.pull_request.head.repo.full_name
-              dest: spec.arguments.parameters.0.value
-            - src:
-                dependencyName: github-hook
-                dataTemplate: '{{ .Input.body.pull_request.head.ref | replace "/" "_" }}'
-              dest: spec.arguments.parameters.2.value
-              operation: overwrite
-            - src:
-                dependencyName: github-hook
-                dataKey: body.pull_request.head.ref
-              dest: spec.arguments.parameters.3.value
-            - src:
-                dependencyName: github-hook
-                dataTemplate: "{{ .Input.body.pull_request.head.repo.name }}-{{ .Input.body.pull_request.number }}-{{ .Input.body.pull_request.head.sha | substr 0 7 }}"
-              dest: metadata.name
-              operation: append
+# apiVersion: argoproj.io/v1alpha1
+# kind: Sensor
+# metadata:
+#   name: gh-pr-dynamic-workflow-sensor
+# spec:
+#   template:
+#     serviceAccountName: operate-workflow-sa
+#   dependencies:
+#     - name: github-hook
+#       eventSourceName: github
+#       eventName: gh-hook
+#       filters:
+#         data:
+#           # Type of Github event that triggered the delivery: [pull_request, push, issues, label, ...]
+#           # https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads
+#           - path: headers.X-Github-Event
+#             type: string
+#             value:
+#               - pull_request
+#           - path: body.action
+#             type: string
+#             value:
+#               - opened
+#               - edited
+#               - reopened
+#               - synchronize
+#           - path: body.pull_request.state
+#             type: string
+#             value:
+#               - open
+#           - path: body.pull_request.base.ref
+#             type: string
+#             value:
+#               - master
+#           - path: body.pull_request.head.user.login
+#             type: string
+#             comparator: "!="
+#             value: "argo-workflows[bot]"
+#   triggers:
+#     - template:
+#         name: dynamic-pr-workflow-trigger
+#         argoWorkflow:
+#           operation: submit
+#           source:
+#             resource:
+#               apiVersion: argoproj.io/v1alpha1
+#               kind: Workflow
+#               metadata:
+#                 generateName: pr-
+#               spec:
+#                 # ttlStrategy:
+#                 #   secondsAfterCompletion: 300 # to cleanup pods after ttl
+#                 workflowTemplateRef:
+#                   name: "wf-tmpl-"  # this name depends on what repo initiated the webhook
+#                 arguments:
+#                   parameters:
+#                     - name: repo_name
+#                       value: ""
+#                     - name: commit_message
+#                       value: ""
+#                     - name: image_variant
+#                       value: "test"
+#                     - name: branch_name
+#                       value: ""
+#           parameters:
+#             - src:
+#                 dependencyName: github-hook
+#                 dataKey: body.pull_request.head.repo.name
+#               dest: spec.workflowTemplateRef.name
+#               operation: append
+#             - src:
+#                 dependencyName: github-hook
+#                 dataKey: body.pull_request.head.repo.full_name
+#               dest: spec.arguments.parameters.0.value
+#             - src:
+#                 dependencyName: github-hook
+#                 dataTemplate: '{{ .Input.body.pull_request.head.ref | replace "/" "_" }}'
+#               dest: spec.arguments.parameters.2.value
+#               operation: overwrite
+#             - src:
+#                 dependencyName: github-hook
+#                 dataKey: body.pull_request.head.ref
+#               dest: spec.arguments.parameters.3.value
+#             - src:
+#                 dependencyName: github-hook
+#                 dataTemplate: "{{ .Input.body.pull_request.head.repo.name }}-{{ .Input.body.pull_request.number }}-{{ .Input.body.pull_request.head.sha | substr 0 7 }}"
+#               dest: metadata.name
+#               operation: append
 
