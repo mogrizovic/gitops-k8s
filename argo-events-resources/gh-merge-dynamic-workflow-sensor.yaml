@@ -46,6 +46,8 @@ spec:
                       value: ""
                     - name: branch_name
                       value: ""
+                    - name: image_variant
+                      value: ""
           parameters:
             - src:
                 dependencyName: github-hook
