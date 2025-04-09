@@ -13,6 +13,7 @@ spec:
           - name: image_tag
           - name: access_token
           - name: values_path
+      serviceAccountName: argo-workflow
       script:
         image: alpine/git
         command: [sh]
