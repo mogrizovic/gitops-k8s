@@ -42,6 +42,7 @@ spec:
           - name: access_token
             valueFrom:
               path: /tmp/access_token
+            globalName: gh_access_token
       volumes:
         - name: github-secret
           secret:
