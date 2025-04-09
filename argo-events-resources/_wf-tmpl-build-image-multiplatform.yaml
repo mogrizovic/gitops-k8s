@@ -28,7 +28,7 @@ spec:
           arguments:
             parameters:
             - name: image_variant
-              value: "{{inputs.parameters.image_variant}}"
+              value: '{{inputs.parameters.image_variant | replace "/" "_" }}'
 
       - - name: kaniko-build
           template: kaniko-build
@@ -38,7 +38,7 @@ spec:
               value: "{{inputs.parameters.image_name}}"
             - name: image_tag
               value: "{{steps.calculate-version.outputs.parameters.next_tag}}"
-            - name: image_variant
+            - name: prerelease
               value: "{{steps.calculate-prerelease.outputs.parameters.prerelease}}"
             - name: repo
               value: "{{inputs.parameters.repo}}"
@@ -56,7 +56,7 @@ spec:
               value: "{{inputs.parameters.image_name}}"
             - name: image_tag
               value: "{{steps.calculate-version.outputs.parameters.next_tag}}"
-            - name: image_variant
+            - name: prerelease
               value: "{{steps.calculate-prerelease.outputs.parameters.prerelease}}"
             - name: platforms
               value: "linux/amd64,linux/arm64"
@@ -88,7 +88,7 @@ spec:
       parameters:
       - name: image_name
       - name: image_tag
-      - name: image_variant
+      - name: prerelease
       - name: arch
       - name: repo
     volumes:
@@ -105,7 +105,7 @@ spec:
       image: gcr.io/kaniko-project/executor:latest
       args:
       - "--context=git://github.com/{{inputs.parameters.repo}}"
-      - '--destination={{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{inputs.parameters.image_variant}}-{{inputs.parameters.arch}}'
+      - '--destination={{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{inputs.parameters.prerelease}}-{{inputs.parameters.arch}}'
       volumeMounts:
       - name: kaniko-secret
         mountPath: /kaniko/.docker
@@ -115,7 +115,7 @@ spec:
       parameters:
       - name: image_name
       - name: image_tag
-      - name: image_variant
+      - name: prerelease
       - name: platforms
     serviceAccountName: argo-workflow
     container:
@@ -125,8 +125,8 @@ spec:
         - >
           manifest-tool --username=$USERNAME --password=$PASSWORD push
           from-args --platforms {{inputs.parameters.platforms}}
-          --template {{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{inputs.parameters.image_variant}}-ARCH
-          --target {{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{inputs.parameters.image_variant}}
+          --template {{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{inputs.parameters.prerelease}}-ARCH
+          --target {{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{inputs.parameters.prerelease}}
       env:
         - name: USERNAME
           valueFrom:
