@@ -33,7 +33,8 @@ spec:
           - path: body.pull_request.head.user.login
             type: string
             comparator: "!="
-            value: "argo-workflows[bot]"
+            value: 
+              - "argo-workflows[bot]"
   triggers:
     - template:
         name: dynamic-pr-workflow-trigger
