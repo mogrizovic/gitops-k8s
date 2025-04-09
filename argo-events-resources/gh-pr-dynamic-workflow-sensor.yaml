@@ -78,7 +78,7 @@ spec:
               dest: spec.arguments.parameters.2.value
             - src:
                 dependencyName: github-hook
-                dataTemplate: '{{ .Input.body.pull_request.head.ref }}'
+                dataKey: body.pull_request.head.ref
               dest: spec.arguments.parameters.3.value
             - src:
                 dependencyName: github-hook
