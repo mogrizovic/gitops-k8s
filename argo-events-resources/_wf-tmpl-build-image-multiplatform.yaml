@@ -45,6 +45,8 @@ spec:
               value: "{{inputs.parameters.repo}}"
             - name: arch
               value: "{{item}}"
+            - name: branch_name
+              value: "{{inputs.parameters.branch_name}}"
           withItems:
             - arm64
             - amd64
