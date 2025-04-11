@@ -11,6 +11,7 @@ spec:
       parameters:
       - name: image_name
       - name: image_variant
+      - name: branch_name
       - name: repo
       - name: commit_message
     steps:
@@ -91,6 +92,7 @@ spec:
       - name: prerelease
       - name: arch
       - name: repo
+      - name: branch_name
     volumes:
       - name: kaniko-secret
         secret:
@@ -104,7 +106,7 @@ spec:
     container:
       image: gcr.io/kaniko-project/executor:latest
       args:
-      - "--context=git://github.com/{{inputs.parameters.repo}}"
+      - "--context=git://github.com/{{inputs.parameters.repo}}#refs/heads/{{inputs.parameters.branch_name}}#HEAD"
       - '--destination={{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{inputs.parameters.prerelease}}-{{inputs.parameters.arch}}'
       volumeMounts:
       - name: kaniko-secret
