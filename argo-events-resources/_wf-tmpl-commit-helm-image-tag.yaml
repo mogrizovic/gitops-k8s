@@ -29,7 +29,7 @@ spec:
 
           cd repo
 
-          echo {{inputs.parameters.access_token}}
+          echo "debug: {{inputs.parameters.access_token}}"
           echo "Updating Helm image tag in values file..."
           sed -i "s/^  tag: .*/  tag: {{inputs.parameters.image_tag}}/" {{inputs.parameters.values_path}}
 
