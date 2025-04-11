@@ -108,7 +108,7 @@ spec:
     container:
       image: gcr.io/kaniko-project/executor:latest
       args:
-      - "--context=git://github.com/{{inputs.parameters.repo}}#refs/heads/{{inputs.parameters.branch_name}}#HEAD"
+      - "--context=git://github.com/{{inputs.parameters.repo}}.git#refs/heads/{{inputs.parameters.branch_name}}"
       - '--destination={{inputs.parameters.image_name}}:{{inputs.parameters.image_tag}}{{inputs.parameters.prerelease}}-{{inputs.parameters.arch}}'
       volumeMounts:
       - name: kaniko-secret
