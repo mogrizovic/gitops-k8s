@@ -25,7 +25,7 @@ spec:
 
           echo "Cloning repo {{inputs.parameters.repo_name}} on branch {{inputs.parameters.branch_name}}"
           git clone --single-branch --branch {{inputs.parameters.branch_name}} \
-            https://x-access-token:{{inputs.parameters.access_token}}@github.com/{{inputs.parameters.repo_name}} repo
+            https://x-access-token:{{inputs.parameters.access_token}}@github.com/{{inputs.parameters.repo_name}}.git repo
 
           cd repo
 
@@ -35,5 +35,6 @@ spec:
           echo "Committing changes..."
           git add {{inputs.parameters.values_path}}
           git commit -m "ci: update image tag to {{inputs.parameters.image_tag}}"
-          git push origin {{inputs.parameters.branch_name}}
+          git push https://x-access-token:{{inputs.parameters.access_token}}@github.com/{{inputs.parameters.repo_name}}.git HEAD:{{inputs.parameters.branch_name}}
+
 
