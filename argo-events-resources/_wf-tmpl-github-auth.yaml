@@ -33,6 +33,7 @@ spec:
             -H "Accept: application/vnd.github+json" \
             https://api.github.com/app/installations/$INSTALLATION_ID/access_tokens | jq -r .token)
 
+          echo "debug: $TOKEN"
           echo "$TOKEN" > /tmp/access_token
         volumeMounts:
           - name: github-secret
