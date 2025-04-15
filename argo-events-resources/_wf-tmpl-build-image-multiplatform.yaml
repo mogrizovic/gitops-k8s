@@ -226,11 +226,7 @@ spec:
         esac
 
         # Construct next tag
-        if [ {{inputs.parameters.prerelease}} != "" ]; then
-          NEXT_TAG="$MAJOR.$MINOR.$PATCH-{{inputs.parameters.prerelease}}"
-        else
-          NEXT_TAG="$MAJOR.$MINOR.$PATCH"
-        fi
+        NEXT_TAG="$MAJOR.$MINOR.$PATCH"
         echo "Bump type: $BUMP -> Next tag: $NEXT_TAG"
 
         # Output to file so it can be passed to next step
