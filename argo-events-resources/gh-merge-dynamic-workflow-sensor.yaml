@@ -62,7 +62,7 @@ spec:
               dest: spec.arguments.parameters.1.value
             - src:
                 dependencyName: github-hook
-                dataTemplate: '{{ .Input.body.ref | replace "/refs/heads/" "" }}'
+                dataTemplate: '{{ .Input.body.ref | replace "refs/heads/" "" }}'
               dest: spec.arguments.parameters.3.value
             - src:
                 dependencyName: github-hook
