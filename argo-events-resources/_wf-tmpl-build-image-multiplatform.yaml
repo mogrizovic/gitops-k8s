@@ -81,7 +81,7 @@ spec:
       command: [sh]
       source: |
         variant={{inputs.parameters.image_variant}}
-        if [ -n {{inputs.parameters.image_variant}} ]; then
+        if [ {{inputs.parameters.image_variant}} != "" ]; then
           variant="-${variant}"
         fi
         echo $variant > /tmp/prerelease.txt
