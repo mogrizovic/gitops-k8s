@@ -34,7 +34,7 @@ spec:
             type: string
             comparator: "!="
             value: 
-              - "myargoworkflows[bot]"
+              - "myargoworkflows"
   triggers:
     - template:
         name: dynamic-pr-workflow-trigger
