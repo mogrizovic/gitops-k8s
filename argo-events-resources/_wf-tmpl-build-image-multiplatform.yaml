@@ -41,6 +41,8 @@ spec:
               value: "{{inputs.parameters.image_name}}"
             - name: image_tag
               value: "{{steps.calculate-version.outputs.parameters.next_tag}}"
+            - name: prerelease
+              value: "{{steps.calculate-version.outputs.parameters.prerelease}}"
             - name: repo
               value: "{{inputs.parameters.repo}}"
             - name: arch
