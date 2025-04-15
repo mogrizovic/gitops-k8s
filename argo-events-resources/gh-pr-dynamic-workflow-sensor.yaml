@@ -61,6 +61,8 @@ spec:
                       value: ""
                     - name: branch_name
                       value: ""
+                    - name: commit_sha
+                      value: ""
           parameters:
             - src:
                 dependencyName: github-hook
@@ -79,6 +81,10 @@ spec:
                 dependencyName: github-hook
                 dataKey: body.pull_request.head.ref
               dest: spec.arguments.parameters.3.value
+            - src:
+                dependencyName: github-hook
+                dataTemplate: "{{ .Input.body.pull_request.head.sha | substr 0 7 }}"
+              dest: spec.arguments.parameters.4.value
             - src:
                 dependencyName: github-hook
                 dataTemplate: "{{ .Input.body.pull_request.head.repo.name }}-{{ .Input.body.pull_request.number }}-{{ .Input.body.pull_request.head.sha | substr 0 7 }}"

@@ -14,6 +14,7 @@ spec:
       - name: branch_name
       - name: repo
       - name: commit_message
+      - name: commit_sha
     steps:
       - - name: calculate-version
           template: calculate-image-tag
@@ -25,6 +26,8 @@ spec:
               value: "{{inputs.parameters.image_name}}"
             - name: image_variant
               value: "{{inputs.parameters.image_variant}}"
+            - name: commit_sha
+              value: "{{inputs.parameters.commit_sha}}"
 
         # - name: calculate-prerelease
         #   template: calculate-image-prerelease
@@ -235,7 +238,7 @@ spec:
         # Calculate prerelease
         variant={{inputs.parameters.image_variant}}
         if [ {{inputs.parameters.image_variant}} != "" ]; then
-          variant="-${variant}"
+          variant="-${variant}-{{inputs.parameters.commit_sha}}"
         fi
         echo $variant > /tmp/prerelease.txt
 
