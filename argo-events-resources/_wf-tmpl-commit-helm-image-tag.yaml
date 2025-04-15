@@ -23,7 +23,7 @@ spec:
 
           full_image_tag="{{inputs.parameters.image_tag}}"
           if [ {{inputs.parameters.image_prerelease}} != "" ]; then
-            full_image_tag="{{inputs.parameters.image_tag}}-{{inputs.parameters.image_prerelease}}"
+            full_image_tag="{{inputs.parameters.image_tag}}{{inputs.parameters.image_prerelease}}"
           fi
 
           git config --global user.name "argo-workflows[bot]"
