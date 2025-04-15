@@ -23,13 +23,15 @@ spec:
               value: "{{inputs.parameters.commit_message}}"
             - name: image_name
               value: "{{inputs.parameters.image_name}}"
-
-        - name: calculate-prerelease
-          template: calculate-image-prerelease
-          arguments:
-            parameters:
             - name: image_variant
               value: "{{inputs.parameters.image_variant}}"
+
+        # - name: calculate-prerelease
+        #   template: calculate-image-prerelease
+        #   arguments:
+        #     parameters:
+        #     - name: image_variant
+        #       value: "{{inputs.parameters.image_variant}}"
 
       - - name: kaniko-build
           template: kaniko-build
@@ -66,25 +68,25 @@ spec:
             - name: repo
               value: "{{inputs.parameters.repo}}"
 
-  - name: calculate-image-prerelease
-    inputs:
-      parameters:
-        - name: image_variant
-    outputs:
-      parameters:
-        - name: prerelease
-          valueFrom:
-            path: /tmp/prerelease.txt
-    serviceAccountName: argo-workflow
-    script:
-      image: ogrizovicm/alpine-curl-jq:1.0.0
-      command: [sh]
-      source: |
-        variant={{inputs.parameters.image_variant}}
-        if [ {{inputs.parameters.image_variant}} != "" ]; then
-          variant="-${variant}"
-        fi
-        echo $variant > /tmp/prerelease.txt
+  # - name: calculate-image-prerelease
+  #   inputs:
+  #     parameters:
+  #       - name: image_variant
+  #   outputs:
+  #     parameters:
+  #       - name: prerelease
+  #         valueFrom:
+  #           path: /tmp/prerelease.txt
+  #   serviceAccountName: argo-workflow
+  #   script:
+  #     image: ogrizovicm/alpine-curl-jq:1.0.0
+  #     command: [sh]
+  #     source: |
+  #       variant={{inputs.parameters.image_variant}}
+  #       if [ {{inputs.parameters.image_variant}} != "" ]; then
+  #         variant="-${variant}"
+  #       fi
+  #       echo $variant > /tmp/prerelease.txt
 
   - name: kaniko-build
     inputs:
@@ -148,12 +150,17 @@ spec:
       parameters:
         - name: image_name      # e.g. ogrizovicm/spring-boot-example
         - name: commit_message  # e.g. "MINOR: Add new endpoint"
+        - name: image_variant
     outputs:
       parameters:
         - name: next_tag
           valueFrom:
             path: /tmp/next_tag.txt
           globalName: image_next_tag
+        - name: prerelease
+          valueFrom:
+            path: /tmp/prerelease.txt
+          globalName: image_prerelease
     serviceAccountName: argo-workflow
     script:
       image: ogrizovicm/alpine-curl-jq:1.0.0
@@ -219,9 +226,21 @@ spec:
         esac
 
         # Construct next tag
-        NEXT_TAG="$MAJOR.$MINOR.$PATCH"
+        if [ {{inputs.parameters.prerelease}} != "" ]; then
+          NEXT_TAG="$MAJOR.$MINOR.$PATCH-{{inputs.parameters.prerelease}}"
+        else
+          NEXT_TAG="$MAJOR.$MINOR.$PATCH"
+        fi
         echo "Bump type: $BUMP -> Next tag: $NEXT_TAG"
 
         # Output to file so it can be passed to next step
         echo -n "$NEXT_TAG" > /tmp/next_tag.txt
+
+        # Calculate prerelease
+        variant={{inputs.parameters.image_variant}}
+        if [ {{inputs.parameters.image_variant}} != "" ]; then
+          variant="-${variant}"
+        fi
+        echo $variant > /tmp/prerelease.txt
+
         exit 0
