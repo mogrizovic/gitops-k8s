@@ -29,7 +29,6 @@ spec:
 
           cd repo
 
-          echo "debug: {{inputs.parameters.access_token}}"
           echo "Updating Helm image tag in values file..."
           sed -i "s/^  tag: .*/  tag: {{inputs.parameters.image_tag}}/" {{inputs.parameters.values_path}}
 
@@ -37,5 +36,4 @@ spec:
           git add {{inputs.parameters.values_path}}
           git commit -m "ci: update image tag to {{inputs.parameters.image_tag}}"
           git push https://x-access-token:{{inputs.parameters.access_token}}@github.com/{{inputs.parameters.repo_name}}.git HEAD:{{inputs.parameters.branch_name}}
-
 
