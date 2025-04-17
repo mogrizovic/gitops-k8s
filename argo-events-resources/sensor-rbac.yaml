@@ -6,10 +6,10 @@ metadata:
 ---
 # Similarly you can use a ClusterRole and ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
   name: operate-workflow-role
-  namespace: argo-workflows
+  # namespace: argo-workflows
 rules:
   - apiGroups:
       - argoproj.io
@@ -22,13 +22,13 @@ rules:
       - clusterworkflowtemplates
 ---
 apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
   name: operate-workflow-role-binding
-  namespace: argo-workflows
+  # namespace: argo-workflows
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
+  kind: ClusterRole
   name: operate-workflow-role
 subjects:
   - kind: ServiceAccount
