@@ -24,15 +24,15 @@ spec:
               - name: image_name
                 value: "ogrizovicm/spring-boot-example"
               - name: image_variant
-                value: '{{ printf "{{inputs.parameters.image_variant}}" }}'
+                value: "{{inputs.parameters.image_variant}}"
               - name: branch_name
-                value: '{{ printf "{{inputs.parameters.branch_name}}" }}'
+                value: "{{inputs.parameters.branch_name}}"
               - name: repo
-                value: '{{ printf "{{inputs.parameters.repo_name}}" }}'
+                value: "{{inputs.parameters.repo_name}}"
               - name: commit_message
-                value: '{{ printf "{{inputs.parameters.commit_message}}" }}'
+                value: "{{inputs.parameters.commit_message}}"
               - name: commit_sha
-                value: '{{ printf "{{inputs.parameters.commit_sha}}" }}'
+                value: "{{inputs.parameters.commit_sha}}"
 
       - - name: get-gh-token
           templateRef:
@@ -46,15 +46,15 @@ spec:
           arguments:
             parameters:
               - name: repo_name
-                value: '{{ printf "{{inputs.parameters.repo_name}}" }}'
+                value: "{{inputs.parameters.repo_name}}"
               - name: branch_name
-                value: '{{ printf "{{inputs.parameters.branch_name}}" }}'
+                value: "{{inputs.parameters.branch_name}}"
               - name: image_tag
-                value: '{{ printf "{{workflow.outputs.parameters.image_next_tag}}" }}'
+                value: "{{workflow.outputs.parameters.image_next_tag}}"
               - name: image_prerelease
-                value: '{{ printf "{{workflow.outputs.parameters.image_prerelease}}" }}'
+                value: "{{workflow.outputs.parameters.image_prerelease}}"
               - name: access_token
-                value: '{{ printf "{{workflow.outputs.parameters.gh_access_token}}" }}'
+                value: "{{workflow.outputs.parameters.gh_access_token}}"
               - name: values_path
                 value: 'k8s/values.yaml'
 
