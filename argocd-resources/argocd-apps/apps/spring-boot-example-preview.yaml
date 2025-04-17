@@ -39,3 +39,8 @@ spec:
       destination:
         server: https://kubernetes.default.svc
         namespace: apps-preview
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+          allowEmpty: true
