@@ -35,6 +35,10 @@ spec:
           valueFiles:
             - values.yaml
             - envs/preview/values.yaml
+        directory:
+          recurse: true
+          jsonnet: {}
+          exclude: '{templates/workflow-template.yaml}'
       project: "default"
       destination:
         server: https://kubernetes.default.svc
