@@ -16,10 +16,4 @@ spec:
               number: 12000
         path: /gh-hook
         pathType: Prefix
-      - backend:
-          service:
-            name: argocd-applicationset-controller
-            port:
-              number: 7000
-        path: /api/webhook
 
