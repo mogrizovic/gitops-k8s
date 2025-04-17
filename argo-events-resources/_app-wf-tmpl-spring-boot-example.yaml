@@ -1,0 +1,61 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ClusterWorkflowTemplate
+metadata:
+  name: wf-tmpl-spring-boot-example
+  namespace: argo-workflows
+spec:
+  entrypoint: main
+  templates:
+  - name: main
+    inputs:
+      parameters:
+      - name: repo_name
+      - name: commit_message
+      - name: image_variant
+      - name: branch_name
+      - name: commit_sha
+    steps:
+      - - name: build
+          templateRef:
+            name: kaniko-build-image
+            template: kaniko-build-loop
+          arguments:
+            parameters:
+              - name: image_name
+                value: "ogrizovicm/spring-boot-example"
+              - name: image_variant
+                value: '{{ printf "{{inputs.parameters.image_variant}}" }}'
+              - name: branch_name
+                value: '{{ printf "{{inputs.parameters.branch_name}}" }}'
+              - name: repo
+                value: '{{ printf "{{inputs.parameters.repo_name}}" }}'
+              - name: commit_message
+                value: '{{ printf "{{inputs.parameters.commit_message}}" }}'
+              - name: commit_sha
+                value: '{{ printf "{{inputs.parameters.commit_sha}}" }}'
+
+      - - name: get-gh-token
+          templateRef:
+            name: github-app-auth
+            template: generate-token
+
+      - - name: commit-tag
+          templateRef:
+            name: commit-helm-image-tag
+            template: commit-image-tag
+          arguments:
+            parameters:
+              - name: repo_name
+                value: '{{ printf "{{inputs.parameters.repo_name}}" }}'
+              - name: branch_name
+                value: '{{ printf "{{inputs.parameters.branch_name}}" }}'
+              - name: image_tag
+                value: '{{ printf "{{workflow.outputs.parameters.image_next_tag}}" }}'
+              - name: image_prerelease
+                value: '{{ printf "{{workflow.outputs.parameters.image_prerelease}}" }}'
+              - name: access_token
+                value: '{{ printf "{{workflow.outputs.parameters.gh_access_token}}" }}'
+              - name: values_path
+                value: 'k8s/values.yaml'
+
+
