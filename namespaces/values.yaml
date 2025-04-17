@@ -1,5 +1,6 @@
 namespaceNames:
   - apps
+  - apps-preview
   - ingress-nginx
   - metallb-system
   - argo-workflows
