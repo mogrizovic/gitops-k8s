@@ -25,7 +25,7 @@ spec:
       requeueAfterSeconds: 1800
   template:
     metadata:
-      name: 'spring-boot-example-{{.branch}}-{{.number}}'
+      name: 'spring-boot-example-{{.branch | replace "/" "_"}}-{{.number}}'
     spec:
       source:
         repoURL: 'https://github.com/mogrizovic/spring-boot-example.git'
