@@ -36,6 +36,7 @@ spec:
                 #   secondsAfterCompletion: 300 # to cleanup pods after ttl
                 workflowTemplateRef:
                   name: "wf-tmpl-"  # this name depends on what repo initiated the webhook
+                  clusterScope: true
                 arguments:
                   parameters:
                     - name: repo_name
