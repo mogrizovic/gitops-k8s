@@ -48,6 +48,8 @@ spec:
                       value: ""
                     - name: commit_sha
                       value: ""
+                    - name: environment
+                      value: "prod"
           parameters:
             - src:
                 dependencyName: github-hook

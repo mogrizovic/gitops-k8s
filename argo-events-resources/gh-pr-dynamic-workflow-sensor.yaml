@@ -64,6 +64,8 @@ spec:
                       value: ""
                     - name: commit_sha
                       value: ""
+                    - name: environment
+                      value: "preview"
           parameters:
             - src:
                 dependencyName: github-hook
