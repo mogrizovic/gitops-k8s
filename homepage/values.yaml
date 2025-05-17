@@ -63,23 +63,45 @@ config:
     - Developer:
         - Github:
             - abbr: GH
-              href: https://github.com/
+              href: https://github.com/mogrizovic/gitops-k8s
 
   services:
-    - My First Group:
-        - My First Service:
-            href: http://localhost/
-            description: Homepage is awesome
+    - k3s:
+        - ArgoCD:
+            href: http://argocd.k3s.home
+            description: ArgoCD UI
+        - Longhorn:
+            href: http://longhorn.k3s.home
+            description: Longhorn UI
+        - Grafana:
+            href: http://grafana.k3s.home
+            description: Grafana UI
+        - Prometheus:
+            href: http://prometheus.k3s.home
+            description: Prometheus UI
+        - Alertmanager:
+            href: http://alertmanager.k3s.home
+            description: Alertmanager UI
+    - Management:
+        - Pi-Hole:
+            href: http://pihole.home
+            description: Pi-Hole UI
+        - Proxmox 0:
+            href: http://proxmox.home
+            description: Proxmox 0 UI
+        - Proxmox 1:
+            href: http://proxmox1.home
+            description: Proxmox 1 UI
 
-    - My Second Group:
-        - My Second Service:
-            href: http://localhost/
-            description: Homepage is the best
+    # - My Second Group:
+    #     - My Second Service:
+    #         href: http://localhost/
+    #         description: Homepage is the best
 
-    - My Third Group:
-        - My Third Service:
-            href: http://localhost/
-            description: Homepage is 😎
+    # - My Third Group:
+    #     - My Third Service:
+    #         href: http://localhost/
+    #         description: Homepage is 😎
   widgets:
     - resources:
         # change backend to 'kubernetes' to use Kubernetes integration. Requires RBAC.
