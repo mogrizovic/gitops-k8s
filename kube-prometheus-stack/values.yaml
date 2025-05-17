@@ -17,7 +17,7 @@ prometheus:
       - host: prometheus.k3s.home
     paths:
       - path: /
-        pathType: Prefix
+    pathType: Prefix
 alertmanager:
   alertmanagerSpec:
     storage:
@@ -35,7 +35,7 @@ alertmanager:
       - host: alertmanager.k3s.home
     paths:
       - path: /
-        pathType: Prefix
+    pathType: Prefix
 grafana:
   ingress:
     enabled: true
