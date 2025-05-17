@@ -8,3 +8,4 @@ namespaceNames:
   - wordpress
   - sealed-secrets
   - monitoring
+  - homepage
