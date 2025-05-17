@@ -10,61 +10,17 @@ spec:
     namespace: monitoring
     server: https://kubernetes.default.svc
   project: default
-  source:
-    chart: kube-prometheus-stack
-    repoURL: https://prometheus-community.github.io/helm-charts
-    targetRevision: v72.4.0
-    helm:
-      releaseName: kube-prometheus-stack
-      values: |
-        crds:
-          enabled: false
-        prometheus:
-          prometheusSpec:
-            storageSpec:
-              volumeClaimTemplate:
-                spec:
-                  storageClassName: longhorn
-                  accessModes: ["ReadWriteOnce"]
-                  resources:
-                    requests:
-                      storage: 10Gi
-          ingress:
-            enabled: true
-            ingressClassName: "nginx"
-            hosts:
-              - host: prometheus.k3s.home
-                paths:
-                  - path: /
-                    pathType: Prefix
-        alertmanager:
-          alertmanagerSpec:
-            storage:
-              volumeClaimTemplate:
-                spec:
-                  storageClassName: longhorn
-                  accessModes: ["ReadWriteOnce"]
-                  resources:
-                    requests:
-                      storage: 10Gi
-          ingress:
-            enabled: true
-            ingressClassName: "nginx"
-            hosts:
-              - host: alertmanager.k3s.home
-                paths:
-                  - path: /
-                    pathType: Prefix
-
-        grafana:
-          ingress:
-            enabled: true
-            ingressClassName: "nginx"
-            hosts:
-              - host: grafana.k3s.home
-                paths:
-                  - path: /
-                    pathType: Prefix
+  sources:
+    - chart: kube-prometheus-stack
+      repoURL: https://prometheus-community.github.io/helm-charts
+      targetRevision: v72.4.0
+      helm:
+        releaseName: kube-prometheus-stack
+        valueFiles:
+          - $values-repo/kube-prometheus-stack/values.yaml
+    - repoURL: https://github.com/mogrizovic/gitops-k8s
+      targetRevision: HEAD
+      ref: values-repo
   syncPolicy:
     automated:
       prune: true
