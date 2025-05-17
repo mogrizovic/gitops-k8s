@@ -140,9 +140,8 @@ config:
     title: Homepage
     headerStyle: boxed
     layout:
-      My First Group:
-      My Second Group:
-      My Third Group:
+      k3s:
+      Management:
 
 # -- Main environment variables. Template enabled.
 # Syntax options:
