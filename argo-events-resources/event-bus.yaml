@@ -23,13 +23,15 @@ spec:
         storageClassName: longhorn
         accessMode: ReadWriteMany
         volumeSize: 5Gi
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: infra
-            operator: In
-            values:
-            - vm
-            - rpi
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: infra
+                operator: In
+                values:
+                - vm
+                - rpi
