@@ -79,6 +79,9 @@ config:
         - Prometheus:
             href: http://prometheus.k3s.home
             description: Prometheus UI
+            widget:
+              type: prometheus
+              url: http://prometheus.k2s.home
         - Alertmanager:
             href: http://alertmanager.k3s.home
             description: Alertmanager UI
