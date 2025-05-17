@@ -20,14 +20,23 @@ spec:
         crds:
           enabled: false
         prometheus:
-          storageSpec:
-            volumeClaimTemplate:
-              spec:
-                storageClassName: longhorn
-                accessModes: ["ReadWriteOnce"]
-                resources:
-                  requests:
-                    storage: 10Gi
+          prometheusSpec:
+            storageSpec:
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: longhorn
+                  accessModes: ["ReadWriteOnce"]
+                  resources:
+                    requests:
+                      storage: 10Gi
+          ingress:
+            enabled: true
+            ingressClassName: "nginx"
+            hosts:
+              - host: prometheus.k3s.home
+                paths:
+                  - path: /
+                    pathType: Prefix
         alertmanager:
           alertmanagerSpec:
             storage:
@@ -38,6 +47,24 @@ spec:
                   resources:
                     requests:
                       storage: 10Gi
+          ingress:
+            enabled: true
+            ingressClassName: "nginx"
+            hosts:
+              - host: alertmanager.k3s.home
+                paths:
+                  - path: /
+                    pathType: Prefix
+
+        grafana:
+          ingress:
+            enabled: true
+            ingressClassName: "nginx"
+            hosts:
+              - host: grafana.k3s.home
+                paths:
+                  - path: /
+                    pathType: Prefix
   syncPolicy:
     automated:
       prune: true
