@@ -23,15 +23,15 @@ spec:
         storageClassName: longhorn
         accessMode: ReadWriteMany
         volumeSize: 5Gi
-  podTemplate:
-    spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: infra
-                operator: In
-                values:
-                - vm
-                - rpi
+    podTemplate:
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: infra
+                  operator: In
+                  values:
+                  - vm
+                  - rpi
