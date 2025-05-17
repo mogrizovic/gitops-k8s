@@ -7,3 +7,4 @@ namespaceNames:
   - longhorn-system
   - wordpress
   - sealed-secrets
+  - monitoring
