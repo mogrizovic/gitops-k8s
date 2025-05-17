@@ -18,6 +18,10 @@ spec:
             jobEnabled: false
           persistence:
             defaultClassReplicaCount: 1
+          ingress:
+            enabled: true
+            ingressClassName: nginx
+            host: longhorn.k3s.home
   syncPolicy:
     automated:
       prune: true
