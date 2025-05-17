@@ -84,13 +84,13 @@ config:
             description: Alertmanager UI
     - Management:
         - Pi-Hole:
-            href: http://pihole.home
+            href: http://pihole.home/admin
             description: Pi-Hole UI
         - Proxmox 0:
-            href: http://proxmox.home
+            href: http://proxmox.home:8006
             description: Proxmox 0 UI
         - Proxmox 1:
-            href: http://proxmox1.home
+            href: http://proxmox1.home:8006
             description: Proxmox 1 UI
 
     # - My Second Group:
