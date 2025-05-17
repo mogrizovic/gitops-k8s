@@ -47,7 +47,7 @@ ingress:
     #   gethomepage.dev/icon: "homepage.png"
     ingressClassName: "nginx"
     hosts:
-      - host: homepage.home
+      - host: homepage.k3s.home
         paths:
           - path: /
             pathType: Prefix
