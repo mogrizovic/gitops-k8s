@@ -23,7 +23,7 @@ spec:
         storageClassName: longhorn
         accessMode: ReadWriteMany
         volumeSize: 5Gi
-  template:
+  podTemplate:
     spec:
       affinity:
         nodeAffinity:
