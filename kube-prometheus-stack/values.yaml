@@ -15,9 +15,9 @@ prometheus:
     ingressClassName: "nginx"
     hosts:
       - host: prometheus.k3s.home
-        paths:
-          - path: /
-            pathType: Prefix
+    paths:
+      - path: /
+        pathType: Prefix
 alertmanager:
   alertmanagerSpec:
     storage:
@@ -33,9 +33,9 @@ alertmanager:
     ingressClassName: "nginx"
     hosts:
       - host: alertmanager.k3s.home
-        paths:
-          - path: /
-            pathType: Prefix
+    paths:
+      - path: /
+        pathType: Prefix
 grafana:
   ingress:
     enabled: true
