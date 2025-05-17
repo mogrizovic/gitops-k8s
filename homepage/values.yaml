@@ -70,31 +70,39 @@ config:
         - ArgoCD:
             href: http://argocd.k3s.home
             description: ArgoCD UI
+            icon: icons/argocd.jpeg
         - Longhorn:
             href: http://longhorn.k3s.home
             description: Longhorn UI
+            icon: icons/longhorn.jpeg
         - Grafana:
             href: http://grafana.k3s.home
             description: Grafana UI
+            icon: icons/grafana.webp
         - Prometheus:
             href: http://prometheus.k3s.home
             description: Prometheus UI
+            icon: icons/prometheus.jpeg
             widget:
               type: prometheus
               url: http://prometheus.k3s.home
         - Alertmanager:
             href: http://alertmanager.k3s.home
             description: Alertmanager UI
+            icon: icons/alertmanager.png
     - Management:
         - Pi-Hole:
             href: http://pihole.home/admin
             description: Pi-Hole UI
+            icon: icons/pi-hole.png
         - Proxmox 0:
             href: http://proxmox.home:8006
             description: Proxmox 0 UI
+            icon: icons/proxmox.png
         - Proxmox 1:
             href: http://proxmox1.home:8006
             description: Proxmox 1 UI
+            icon: icons/proxmox.png
 
     # - My Second Group:
     #     - My Second Service:
