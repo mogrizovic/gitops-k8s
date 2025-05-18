@@ -6,8 +6,10 @@ metadata:
   labels:
     alertmanagerConfig: receivers
 spec:
+  route:
+    receiver: discord_webhook
   receivers:
-  - name: 'discord_webhook'
+  - name: discord_webhook
     discordConfigs:
     - sendResolved: true
       apiURL: 
