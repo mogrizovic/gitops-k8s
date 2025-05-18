@@ -10,5 +10,7 @@ spec:
   - name: 'discord_webhook'
     discordConfigs:
     - sendResolved: true
-      apiURL: discord_webhook
+      apiURL: 
+        name: alertmanager-kube-prometheus-stack-alertmanager-alert-destinations
+        key: discord_webhook
 
