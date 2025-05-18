@@ -11,5 +11,5 @@ spec:
   template:
     metadata:
       creationTimestamp: null
-      name: kube-prometheus-stack-alert-destinations
+      name: alertmanager-kube-prometheus-stack-alertmanager-alert-destinations
       namespace: monitoring
