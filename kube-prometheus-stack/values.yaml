@@ -28,6 +28,9 @@ alertmanager:
           resources:
             requests:
               storage: 10Gi
+    alertmanagerConfigSelector:
+      matchLabels:
+        alertmanagerConfig: receivers
   ingress:
     enabled: true
     ingressClassName: "nginx"

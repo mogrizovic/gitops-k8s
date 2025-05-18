@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: receivers
+  namespace: monitoring
+  labels:
+    alertmanagerConfig: receivers
+spec:
+  receivers:
+  - name: 'discord_webhook'
+    discordConfigs:
+    - sendResolved: true
+      apiURL: discord_webhook
+
