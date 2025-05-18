@@ -1,0 +1,15 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: kube-prometheus-stack-alert-destinations
+  namespace: monitoring
+spec:
+  encryptedData:
+    discord_webhook: AgAh1Hpe//j3/GTktiRtHbkX9HM17PBu5VzsokZUhmuLWmYc9oHDRvD9cKvdB6g966PWb4FF+13EgCzyY4nYNTBVWTD1+YrT/qy1TVehWXVjnzgllcwyZHlzUxSMUgdoZ15Whxh5IivdIOLeXUW+qyWOqsVXu24OtsCQeKeuKEVZmA6oEb/pOtXrZcHcJ2sWKzxCGXZZrBZ6CvpN67JC3X/eXndYgXPjMXD5vZPZEQmsfDcm0N6Q8uP3wndzyXuvczfc/DtgXVejJuUNDhHt0OXSShP8vco0ZTVFkMEMnQwCAtGFPL2wYUftPvYZQDuPQkiilTyHBkyzgZMGoN+inZbv3VViRrzb6m02D1auro6WFatOSJzvLSkH3XAr2lN/PzKOvPh2DX2yD8N4KKzKWYf04vajzlbeycnBzvEAxe1ZJ8PdHwvZWSePZMmoBWok6dDXl0C5sib6CNIpeQ5G12F5NX0Z16O2su6DEYSvPhnivj9/SreTChdzwiXzCaAyDlsFDYbf/bFdCB6S9J3SOXVL0tq/Xq7CITRQg437yQMboCtz/C1ODpH+8TsbPCFm7l1R7SJ3r1JBthP/R/p21VGwON7YBj3QGHXP/ZRd9LJgQoDf4qw7FBDzkr1Q4oFoGGZNludPVHatjX3TTSlZNGj05tonUJyBaUAMi/Ouxp0u02kubsF3/UBBVk22AlpBx7YtIibV+2+NCIz8QULKu7p1ptY2fcJ/sfF0IHQiPsadmHwcF+0GYP7+bMnpYUqWfDL6XsIaxpChgWrM6SsFuhlcuiYso6qaTIjRRU0MjlIh6R4SlogQxmuma2oxY4wPpT3OXDXZnX9R+VNkoado4PKelS+OQLl/yNoEIVhC
+  template:
+    metadata:
+      creationTimestamp: null
+      name: kube-prometheus-stack-alert-destinations
+      namespace: monitoring

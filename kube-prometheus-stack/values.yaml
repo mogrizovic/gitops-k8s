@@ -36,6 +36,8 @@ alertmanager:
     paths:
       - /
     pathType: Prefix
+  secrets:
+    - kube-prometheus-stack-alert-destinations
 grafana:
   ingress:
     enabled: true
