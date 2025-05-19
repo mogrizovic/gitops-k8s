@@ -32,7 +32,7 @@ alertmanager:
       matchLabels:
         alertmanagerConfig: receivers
     secrets:
-      - alertmanager-kube-prometheus-stack-alertmanager-alert-destinations
+      - alertmanager-alert-destinations
   ingress:
     enabled: true
     ingressClassName: "nginx"
