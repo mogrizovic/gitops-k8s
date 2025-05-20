@@ -66,12 +66,11 @@ alertmanager:
       repeat_interval: 12h
       receiver: 'null'
       routes:
-      - receiver: 'discord_webhook'
+      - receiver: 'monitoring/receivers/discord_webhook'
         matchers:
           - alertname = "Watchdog"
     receivers:
     - name: "null"
-    - name: discord_webhook
     templates:
     - '/etc/alertmanager/config/*.tmpl'
   ingress:
