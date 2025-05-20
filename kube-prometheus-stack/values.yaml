@@ -36,7 +36,7 @@ alertmanager:
   tplConfig: true
   stringConfig: |-
     global:
-      resolve_timeout: 5m
+      resolve_timeout: 6m
     inhibit_rules:
       - source_matchers:
           - 'severity = critical'
@@ -61,7 +61,7 @@ alertmanager:
       - target_matchers:
           - 'alertname = InfoInhibitor'
     route:
-      group_by: ['namespace']
+      group_by: ['alertname', 'job']
       group_wait: 30s
       group_interval: 5m
       repeat_interval: 12h
@@ -73,11 +73,9 @@ alertmanager:
     receivers:
     - name: "null"
     - name: discord_webhook
-      discordConfigs:
-      - sendResolved: true
-        apiURL: 
-          name: alertmanager-alert-destinations
-          key: discord_webhook
+      discord_configs:
+      - send_resolved: true
+        webhook_url_file: '/etc/alertmanager/secrets/alertmanager-alert-destinations/discord_webhook'
     templates:
     - '/etc/alertmanager/config/*.tmpl'
   ingress:
