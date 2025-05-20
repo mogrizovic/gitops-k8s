@@ -33,8 +33,7 @@ alertmanager:
         alertmanagerConfig: receivers
     secrets:
       - alertmanager-alert-destinations
-  tplConfig: true
-  stringConfig: |-
+  config:
     global:
       resolve_timeout: 6m
     inhibit_rules:
