@@ -19,7 +19,6 @@ prometheus:
       - /
     pathType: Prefix
 alertmanager:
-  enabled: false
   alertmanagerSpec:
     storage:
       volumeClaimTemplate:
