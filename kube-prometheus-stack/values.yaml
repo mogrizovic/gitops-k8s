@@ -71,6 +71,7 @@ alertmanager:
           - alertname = "Watchdog"
     receivers:
     - name: "null"
+    - name: discord_webhook
     templates:
     - '/etc/alertmanager/config/*.tmpl'
   ingress:
