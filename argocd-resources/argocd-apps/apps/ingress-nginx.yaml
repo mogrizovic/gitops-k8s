@@ -20,6 +20,13 @@ spec:
         controller:
           admissionWebhooks:
             enabled: false
+          resources:
+            limits:
+              cpu: 100m
+              memory: 90Mi
+            requests:
+              cpu: 200m
+              memory: 512Mi
   syncPolicy:
     automated:
       prune: true
