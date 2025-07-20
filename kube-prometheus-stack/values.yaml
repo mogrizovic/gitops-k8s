@@ -2,6 +2,7 @@ crds:
   enabled: false
 prometheus:
   prometheusSpec:
+    retentionSize: "8Gi"
     storageSpec:
       volumeClaimTemplate:
         spec:
