@@ -21,10 +21,10 @@ spec:
           admissionWebhooks:
             enabled: false
           resources:
-            limits:
+            requests:
               cpu: 100m
               memory: 90Mi
-            requests:
+            limits:
               cpu: 200m
               memory: 512Mi
   syncPolicy:
